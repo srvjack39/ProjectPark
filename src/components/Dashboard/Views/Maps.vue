@@ -23,8 +23,8 @@
     data () {
       return {
         center: {
-          lat: 40.748817,
-          lng: -73.985428
+          lat: 14.1594249,
+          lng: 101.3463308
         },
         options: {
           styles: [{

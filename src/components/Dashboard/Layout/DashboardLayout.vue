@@ -3,7 +3,7 @@
       
     <side-bar  >
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/admin/overview" >
+      <sidebar-link to="/admin/Resevation" >
         <i class="nc-icon nc-satisfied"></i>
         <p>หน้าแรก </p>
       </sidebar-link>
@@ -11,9 +11,6 @@
         <i class="nc-icon nc-credit-card"></i>
         <p>เติมเงิน</p>
       </sidebar-link>
-      <sidebar-link to="/admin/table-list" >
-        <i class="nc-icon nc-notes" ></i>
-        <p>จองที่จอดรถ</p>
       </sidebar-link>
       <sidebar-link to="/admin/Typography" v-if="'On' === this.statusin || 'On' === statusout">
         <i class="nc-icon nc-simple-delete"></i>
@@ -31,11 +28,11 @@
         <i class="nc-icon nc-simple-delete"></i>
         <p>Report</p>
       </sidebar-link>
-      <!-- <sidebar-link to="/admin/icons">
+       <!-- <sidebar-link to="/admin/icons">
         <i class="nc-icon nc-atom"></i>
         <p>Icons</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/maps">
+      </sidebar-link> -->
+      <!-- <sidebar-link to="/admin/maps">
         <i class="nc-icon nc-pin-3"></i>
         <p>Maps</p>
       </sidebar-link>
@@ -86,11 +83,23 @@
       DashboardContent,
       MobileMenu
     },
+    created: function () { /* แสดงชื่อ  */
+        var user = firebase.auth().currentUser
+        if (user) {
+          this.name = user.displayName
+          this.id = user.uid
+        }else {
+          alert('No user')
+          this.$router.replace('/')
+        }
+        this.pullData() 
+    },
     mounted () {
       const dbRefObject = firebase.database().ref().child('/Park/')
     const dbRefimage = firebase.database().ref().child('image')
     const dbRefuser = firebase.database().ref().child('users')
     const dbactive = firebase.database().ref().child('/active/')
+    const dbparksub = firebase.database().ref().child('/Parksubmit/')
     dbRefObject.on('value', snap => {
       this.showpark = snap.val()
     }),
@@ -98,7 +107,10 @@
       this.showimage = snap.val()
     }),
     dbactive.on('value', snap => {
-      this.showactive = snap.val()
+      this.showparksub = snap.val()
+    }),
+    dbparksub.on('value', snap => {
+      this.showparksub = snap.val()
     }),
     dbRefuser.on('value', snap => {
       this.showuser = snap.val()
@@ -112,7 +124,6 @@
               this.statusin = this.showuser[users].status_in
               this.statusout = this.showuser[users].status_out
               this.position1 = this.showuser[users].position
-              console.log(this.status)
             }
           }
     })

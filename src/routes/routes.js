@@ -15,6 +15,8 @@ import Admin from 'src/components/Dashboard/Views/Admin.vue'
 import Addpark from 'src/components/Dashboard/Views/Addpark.vue'
 import Adddeposit from 'src/components/Dashboard/Views/Adddeposit.vue'
 import Report from 'src/components/Dashboard/Views/Report.vue'
+import Resevation from 'src/components/Dashboard/Views/Resevation.vue'
+import Resevpark from 'src/components/Dashboard/Views/Resevpark.vue'
 Report
 const routes = [
   {
@@ -86,6 +88,16 @@ const routes = [
         path: 'report',
         name: 'Report',
         component: Report
+      },
+      {
+        path: 'Resevation',
+        name: 'Resevation',
+        component: Resevation
+      },
+      {
+        path: 'Resevpark',
+        name: 'Resevpark',
+        component: Resevpark
       }
     ]
   },

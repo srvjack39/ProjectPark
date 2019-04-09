@@ -1,11 +1,11 @@
 <template>
-  <card>
+  <card >
     <h4 slot="header" class="card-title">Add credit</h4>
     <!-- {{showuser}} -->
     <div class="field">
       <div class="control">
         <input class="input is-info" type="number" v-model="number" placeholder="Info input">
-        <div class="file">
+         <div class="file" style="margin-top:2%;">
             <label class="file-label">
               <input class="file-input" type="file" name="resume"  @change="onFileChange($event.target.files[0])"required>
               <span class="file-cta">
@@ -13,15 +13,20 @@
                   <i class="fas fa-upload"></i>
                 </span>
                 <span class="file-label">
-                  Choose a file…
+                  Upload File 
                   {{this.dataImg.name}}
                 </span>
               </span>
             </label>
           </div>
       </div>
+      <section>
+        <button class="button is-medium"
+        @click="alertAdddeposit()" style="margin-top:2%;">
+            Submit
+        </button>
+    </section>
     </div>
-    <a class="button" @click="add_money()">submit</a>
     <!-- <a class="button" @click="addResport">Resportday</a> -->
   </card>
 </template>
@@ -51,7 +56,8 @@ export default {
           image:'',
         },
         dataImg:'',
-        showimage: ''
+        showimage: '',
+        isImageModalActive: false,
     }
   },
   mounted () {
@@ -78,6 +84,9 @@ export default {
         if (user) {
           this.name = user.displayName
           this.id = user.uid
+        }else {
+          alert('No user')
+          this.$router.replace('/')
         }
         this.pullData() 
     },
@@ -108,7 +117,9 @@ export default {
             name: name,
             money: parseFloat(this.number, 10),
             id: id,
-            pic : this.dataImg.name
+            pic : this.dataImg.name,
+            hours : this.todayhous,
+            daysub : this.todayDay+'-'+ this.todayMont + '-'+ this.todayYear
           }
           let tmp1 = {
             name: name,
@@ -120,9 +131,31 @@ export default {
           }
           firebase.database().ref('image').child(id).push(tmp)
           firebase.database().ref('Report').push(tmp1)
+          this.$router.replace('/admin/overview')
         } // ฟังชั่นส่งการเติมเงินของ User และระบุเวลาที่ส่ง-วัน/เดือน/ปี
       }
       this.pullData()
+    },
+    alertAdddeposit: function () {
+              this.$swal({
+              title: 'คุณต้องการเติมเงิน : ' + this.number +' บาท ',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Ok',
+              cancelButtonText: 'Cancle',
+              showCloseButton: true,
+              showLoaderOnConfirm: true,
+            }).then((result) => {
+          if(result.value) {
+            this.add_money ()
+            this.$swal('ยืนยัน', 'ได้ยืนยันการเติมเงินจำนวน : ' + this.number + ' บาท ', 'success' )
+          } else {
+            this.$swal('ยกเลิก', 'คุณได้ยกเลิกการเติมเงิน', 'info')
+          }
+        })
+      },
+    close(){
+      this.isImageModalActive = false
     },
     onFileChange (fileImg) {
       this.dataImg = fileImg

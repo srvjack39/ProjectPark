@@ -7,9 +7,9 @@
       <div class="logo">
         <a href="#" class="simple-text">
             <div class="logo-img">
-                <img src="static/img/72-200.png" alt="">
+                <i class="fas fa-car" style="color:#000000;"></i>
             </div>
-          {{title}}
+          Parking
         </a>
       </div>
 
@@ -40,7 +40,7 @@
     props: {
       title: {
         type: String,
-        default: 'Park'
+        default: 'Vue LBD'
       },
       backgroundColor: {
         type: String,

@@ -1,52 +1,340 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <select class="form-control form-control-lg" v-model="selectedlan" >
-            <option :value="null" disabled>-- เลือกลานจอดรถ --</option>
-            <option v-for="(apark, key) in showpark"  :value="apark.name" >{{apark.name}}</option>
-          </select><br>
-          <select class="form-control form-control-lg" v-model="selectedhoues" >
-              <option value="null" disabled>-- เลือกจำนวนชั่วโมง --</option>
-              <option value="1" >1 ชั่วโมง</option>
-              <option value="2" >2 ชั่วโมง</option>
-              <option value="3" >3 ชั่วโมง</option>
-              <option value="5" >5 ชั่วโมง</option>
-              <option value="8" >8 ชั่วโมง</option>
-              <option value="12" >12 ชั่วโมง</option>
-        </select>
-        <br>
-        <select class="form-control form-control-lg" v-model="selectedtime">
-          <option :value="null" disabled>-- เลือกเวลา -- </option>
-          <option value="1" >1.00 น.</option>
-          <option value="2" >2.00 น.</option>
-          <option value="3" >3.00 น.</option>
-          <option value="4" >4.00 น.</option>
-          <option value="5" >5.00 น.</option>
-          <option value="6" >6.00 น.</option>
-          <option value="7" >7.00 น.</option>
-          <option value="8" >8.00 น.</option>
-          <option value="9" >9.00 น.</option>
-          <option value="10" >10.00 น.</option>
-          <option value="11" >11.00 น.</option>
-          <option value="12" >12.00 น.</option>
-          <option value="13" >13.00 น.</option>
-          <option value="14" >14.00 น.</option>
-          <option value="15" >15.00 น.</option>
-          <option value="16" >16.00 น.</option>
-          <option value="17" >17.00 น.</option>
-          <option value="18" >18.00 น.</option>
-          <option value="19" >19.00 น.</option>
-          <option value="20" >20.00 น.</option>
-          <option value="21" >21.00 น.</option>
-          <option value="22" >22.00 น.</option>
-          <option value="23" >23.00 น.</option>
-          <option value="24" >24.00 น.</option>
-        </select><br>
-          <a class="button is-primary is-medium is-fullwidth" @click="commitReser">Submit</a>
+        <div class="row">
+            <div class="col-md-3">
+                <p>จองที่จอดรถ</p>
+            </div>
         </div>
+        <div class="row">
+        <div class="col-md-6">
+            <select class="form-control " v-model="selectedlan" >
+                <option :value="null" disabled>-- เลือกลานจอดรถ --</option>
+                <option v-for="(apark, key) in showpark"  :value="apark.name" >{{apark.name}}</option>
+              </select>
+        </div>
+        </div>
+      <div class="row">
+          <div class="col-md-3">
+              <p>เลือกเวลาเข้าจอดรถ </p>
+          </div>
       </div>
+      <div class="row">
+        <div class="col-md-3">
+          <select class="form-control " v-model="selectedtime">
+            <option :value="null" >-- เลือกเวลา -- </option>
+            <option value="0" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + parseFloat(todayminit,10).toFixed(0)  <= 0.00 || 
+            parseFloat(todayhous,10).toFixed(0)+ '.' + parseFloat(todayminit,10).toFixed(0) < 0.59">0</option>
+            <option value="1" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 1.59">1 </option>
+            <option value="2" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 2.59">2 </option>            
+            <option value="3" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 3.59">3 </option>            
+            <option value="4" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 4.59">4 </option>            
+            <option value="5" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 5.59">5 </option>            
+            <option value="6" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 6.59">6 </option>            
+            <option value="7" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 7.59">7 </option>
+            <option value="8" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 8.59">8 </option>
+            <option value="9" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 9.59">9 </option>
+            <option value="10" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 10.59">10 </option>
+            <option value="11" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 11.59">11 </option>
+            <option value="12" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 12.59">12 </option>
+            <option value="13" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 13.59">13 </option>
+            <option value="14" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 14.59">14 </option>
+            <option value="15" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 15.59">15 </option>
+            <option value="16" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 16.59">16 </option>
+            <option value="17" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 17.59">17 </option>
+            <option value="18" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 18.59">18 </option>
+            <option value="19" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 19.59">19 </option>
+            <option value="20" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 20.59">20 </option>
+            <option value="21" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 21.59">21 </option>
+            <option value="22" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 22.59">22 </option>
+            <option value="23" v-if="parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 22.59">23 </option>
+          </select>
+          </div>
+          <div class="col-md-3">
+              <select class="form-control " v-model="selectedminit">
+                  <option :value="null" disabled> -- นาที -- </option>
+                  <option value="00" v-if="selectedtime == 5 &&
+                  parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 5.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  5.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 5 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 5.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 6 &&
+                  parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 6.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  6.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 6 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 6.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 7 &&
+                  parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 7.05"> 00 น. </option>                  
+              <option value="05" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.05 ">05 น. </option>
+              <option value="10" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.10 ">10 น. </option>
+              <option value="15" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  7.15 ">15 น.</option>
+              <option value="20" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.20 ">20 น.</option>
+              <option value="25" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.25">25 น.</option>
+              <option value="30" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.30 ">30 น. </option>
+              <option value="35" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.35">35 น.</option>
+              <option value="40" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.40 ">40 น.</option>
+              <option value="45" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.45 ">45 น.</option>
+              <option value="50" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.50">50 น.</option>
+              <option value="55" v-if="selectedtime == 7 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 7.55">55 น.</option>
+
+              <option value="00" v-if="selectedtime == 8 &&
+              parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 8.05"> 00 น. </option>      
+              <option value="05" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  8.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 8 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 8.55">55 น.</option>
+
+                  
+              <option value="00" v-if="selectedtime == 9 &&
+              parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 9.05"> 00 น. </option>  
+                  <option value="05" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  9.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 9 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 9.55">55 น.</option>
+
+              <option value="00" v-if="selectedtime == 10 &&
+              parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 10.05"> 00 น. </option>  
+              <option value="05" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.05 ">05 น. </option>
+              <option value="10" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.10 ">10 น. </option>
+              <option value="15" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  10.15 ">15 น.</option>
+              <option value="20" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.20 ">20 น.</option>
+              <option value="25" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.25">25 น.</option>
+              <option value="30" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.30 ">30 น. </option>
+              <option value="35" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.35">35 น.</option>
+              <option value="40" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.40 ">40 น.</option>
+              <option value="45" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.45 ">45 น.</option>
+              <option value="50" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.50">50 น.</option>
+              <option value="55" v-if="selectedtime == 10 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 10.55">55 น.</option>
+
+              
+              <option value="00" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 11.05"> 00 น. </option>
+              <option value="05" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.05 ">05 น. </option>
+              <option value="10" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.10 ">10 น. </option>
+              <option value="15" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  11.15 ">15 น.</option>
+              <option value="20" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.20 ">20 น.</option>
+              <option value="25" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.25">25 น.</option>
+              <option value="30" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.30 ">30 น. </option>
+              <option value="35" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.35">35 น.</option>
+              <option value="40" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.40 ">40 น.</option>
+              <option value="45" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.45 ">45 น.</option>
+              <option value="50" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.50">50 น.</option>
+              <option value="55" v-if="selectedtime == 11 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 11.55">55 น.</option>
+
+              <option value="00" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 12.05"> 00 น. </option>
+              <option value="05" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.05 ">05 น. </option>
+              <option value="10" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.10 ">10 น. </option>
+              <option value="15" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  12.15 ">15 น.</option>
+              <option value="20" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.20 ">20 น.</option>
+              <option value="25" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.25">25 น.</option>
+              <option value="30" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.30 ">30 น. </option>
+              <option value="35" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.35">35 น.</option>
+              <option value="40" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.40 ">40 น.</option>
+              <option value="45" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.45 ">45 น.</option>
+              <option value="50" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.50">50 น.</option>
+              <option value="55" v-if="selectedtime == 12 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 12.55">55 น.</option>
+
+              <option value="00" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 13.05"> 00 น. </option>
+              <option value="05" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.05 ">05 น. </option>
+              <option value="10" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.10 ">10 น. </option>
+              <option value="15" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  13.15 ">15 น.</option>
+              <option value="20" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.20 ">20 น.</option>
+              <option value="25" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.25">25 น.</option>
+              <option value="30" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.30 ">30 น. </option>
+              <option value="35" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.35">35 น.</option>
+              <option value="40" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.40 ">40 น.</option>
+              <option value="45" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.45 ">45 น.</option>
+              <option value="50" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.50">50 น.</option>
+              <option value="55" v-if="selectedtime == 13 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 13.55">55 น.</option>
+
+              <option value="00" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 14.05"> 00 น. </option>
+              <option value="05" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.05 ">05 น. </option>
+              <option value="10" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.10 ">10 น. </option>
+              <option value="15" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  14.15 ">15 น.</option>
+              <option value="20" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.20 ">20 น.</option>
+              <option value="25" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.25">25 น.</option>
+              <option value="30" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.30 ">30 น. </option>
+              <option value="35" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.35">35 น.</option>
+              <option value="40" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.40 ">40 น.</option>
+              <option value="45" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.45 ">45 น.</option>
+              <option value="50" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.50">50 น.</option>
+              <option value="55" v-if="selectedtime == 14 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 14.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 15 &&
+                      parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 15.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  15.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 15 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 15.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 16.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  16.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 16 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 16.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 17.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  17.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 17 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 17.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 18.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  18.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 18 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 18.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 19.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  19.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 19 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 19.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 20.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  20.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 20 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 20.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 21.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  21.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 21 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 21.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 22.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  22.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 22 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 22.55">55 น.</option>
+
+                  <option value="00" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit < 23.05"> 00 น. </option>
+                  <option value="05" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.05 ">05 น. </option>
+                  <option value="10" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.10 ">10 น. </option>
+                  <option value="15" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit <  23.15 ">15 น.</option>
+                  <option value="20" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.20 ">20 น.</option>
+                  <option value="25" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.25">25 น.</option>
+                  <option value="30" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.30 ">30 น. </option>
+                  <option value="35" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.35">35 น.</option>
+                  <option value="40" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.40 ">40 น.</option>
+                  <option value="45" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.45 ">45 น.</option>
+                  <option value="50" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.50">50 น.</option>
+                  <option value="55" v-if="selectedtime == 23 && parseFloat(todayhous,10).toFixed(0)+ '.' + todayminit  < 23.55">55 น.</option>
+                </select>
+          </div>
+      </div>
+          <div class="row">
+              <div class="col-md-3">
+                  <p>เลือกจำนวนชั่วโมงที่จอด </p>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                 <select class="form-control " v-model="selectedhoues" >
+                    <option value="null" disabled>-- เลือกจำนวนชั่วโมง -- </option>
+                    <!-- <option value="0.30" v-if="(23.60-todayhous) > 0.30">30 นาที</option> -->
+                    <option value="1" v-if="(23.60-todayhous) > 1.00">1 ชั่วโมง</option>
+                    <option value="2" v-if="(23.60-todayhous) > 2.00">2 ชั่วโมง</option>
+                    <option value="3" v-if="(23.60-todayhous) > 3.00">3 ชั่วโมง</option>
+                    <option value="5" v-if="(23.60-todayhous) > 5.00">5 ชั่วโมง</option>
+                    <option value="8" v-if="(23.60-todayhous) > 8.00">8 ชั่วโมง</option>
+                    <option value="12" v-if="(23.60-todayhous) > 12.00">12 ชั่วโมง</option>
+              </select>
+              </div>
+          </div><br>
+          <div class="row">
+              <div class="col-md-6">
+                  <a class="button is-dark is-large is-fullwidth" style="color:#ffffff;"  @click="isalertSubmit()">Submit</a>
+              </div>
+          </div>
     </div>
   </div>
 </template>
@@ -55,9 +343,12 @@
   import LTable from 'src/components/UIComponents/Table.vue'
   import Card from 'src/components/UIComponents/Cards/Card.vue'
   import moment from 'moment'
+  var database = firebase.database()
+  var reportmoneyRef = database.ref('/Reportmoney')
   export default {
     data () {
       return {
+        time1:'',
         park: '',
         hours: '',
         start: '',
@@ -68,11 +359,16 @@
         result: '',
         status:'',credit: '',
         selectedlan:null,
+        creditD:'',
         optionslan: [],
-        selectedhoues: null,
+        selectedhoues: null,  
         selectedtime: null,
+        selectedminit: null,
         optionstime: [],
-        todayhous: moment().format('HH:mm'),
+        isSubmit: false,
+        credit:'',
+        todayminit: moment().format('mm'),
+        todayhous: moment().format('HH.mm'),
         // todayDate: moment().format('D MMMM  YYYY'),
         todayDay: moment().format('D'),
         todayMont: moment().format('MMMM'),
@@ -86,6 +382,9 @@
         if (user) {
           this.name = user.displayName
           this.id = user.uid
+        }else {
+          alert('No user')
+          this.$router.replace('/')
         }
         this.pullData() 
     },
@@ -99,7 +398,12 @@
     const dbRefObject22 = firebase.database().ref().child('/Month/Month12/')
     const dbRefObject = firebase.database().ref().child('/Park/')
     const dbReport = firebase.database().ref().child('/Months/')
+    const dbReportMonthtotal = firebase.database().ref().child('/Years/')
     const dbusers = firebase.database().ref().child('/users/')
+    const dbyear = firebase.database().ref().child('/Year/')
+    dbyear.on('value', snap => {
+      this.showYear = snap.val()
+    })
     dbRefObject22.on('value', snap => {
       this.Dayss = snap.val()
     })
@@ -112,6 +416,9 @@
     dbusers.on('value', snap => {
       this.usershow = snap.val()
     }) 
+    dbReportMonthtotal.on('value', snap => {
+      this.MonthTotal = snap.val()
+    })
   },
     methods: {
       pullData: function () {
@@ -126,7 +433,41 @@
             that.dayr = snapshot.val()
           })
       },
+      CancleSubmit () {
+        this.isSubmit = false
+      },
+      isalertSubmit() {
+        var timestart = parseFloat(this.selectedtime,10).toFixed(0) + '.' + this.selectedminit
+        var time = parseFloat(timestart,10) + parseFloat(this.selectedhoues, 10)
+        console.log(time)
+        this.$swal({
+          title: 'ยืนยันการจอง',
+          html: 
+          'ชื่อลานจอดรถ : ' +this.selectedlan + '<br><br>'
+          + 'จอง : ' + this.selectedhoues + ' ชั่วโมง <br><br>' + 
+          'ตั้งแต่เวลา : ' + timestart + 
+          ' น. ถึงเวลา ' 
+          + parseFloat(time,10).toFixed(2)
+          + ' น. <br><br> ค่าบริการ : ' + parseFloat(this.selectedhoues, 10)*10 + ' บาท ' ,
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'ยืนยัน',
+          cancelButtonText: 'ยกเลิก',
+          showCloseButton: true,
+          showLoaderOnConfirm: true,
+          }).then((result) => {
+            if(result.value) {
+            this.commitReser ()
+            this.$swal('ยืนยัน', 'ได้ยืนยันการจองลานจอดรถ :' + this.selectedlan , 'success' )
+          } else {
+            this.$swal('ยกเลิก', 'คุณได้ยกเลิกการจองลานจอดรถ', 'info')
+          }
+        })
+      },
       commitReser () {
+        var timestart = parseFloat(this.selectedtime,10).toFixed(0) + '.' + this.selectedminit
+        var time = parseFloat(timestart,10) + parseFloat(this.selectedhoues, 10)
+        var timeEnd = parseFloat(time,10).toFixed(2)
       for (var variable in this.showuser) {
         if (this.showuser[variable].id === this.id) {
           var id = this.id
@@ -135,21 +476,20 @@
           var result = (parseFloat(this.selectedtime, 10) + parseFloat(this.selectedhoues, 10)).toFixed(2)
           var resultcredit = this.showuser[variable].money - credit
           var hours = parseFloat(this.selectedhoues, 10).toFixed(2)
-          var start = parseFloat(this.selectedtime, 10).toFixed(2)
           let tmp = {
             money:credit,
             name: name,
             park: this.selectedlan,
             hours: hours,
-            start: start,
-            End: result,
+            start: timestart,
+            End: parseFloat(time,10).toFixed(2),
             time : this.todayhous,
             date : this.todaydate,
             Day : this.todayDay,
             Month : this.todayMont,
             Year : this.todayYear,
             Nummonth : this.todaynummonth,
-            status_in: 'On',
+            status_in: 'Off',
             status_out: 'Off'
           }
           let tmp2 = {
@@ -157,8 +497,8 @@
             name: name,
             park: this.selectedlan,
             hours: hours,
-            start: start,
-            End: result,
+            start: timestart,
+            End: parseFloat(time,10).toFixed(2),
             time : this.todayhous,
             date : this.todaydate,
             Day : this.todayDay,
@@ -166,19 +506,21 @@
             Year : this.todayYear,
             Nummonth : this.todaynummonth
           }
-          if(this.usershow[variable].money <= 0){
+          var moenyset = parseFloat(this.selectedhoues, 10)*10
+          console.log(moenyset)
+          if(this.usershow[variable].money < moenyset){
             alert("No money")
+            this.$router.replace('/admin/user')
           }else{
+            console.log(moenyset)
             for (var apark in this.showpark1) {
             var countnum = parseFloat(this.showpark1[apark].count, 10)
-            if (this.showpark1[apark].name === this.selectedlan){
+            if (this.showpark1[apark].name === this.selectedlan && this.showpark1[apark].count <= this.showpark1[apark].Total-1){
             var count = parseFloat(1, 10)
             firebase.database().ref('Park').child(apark).update({
             count: countnum+1
         })
-      } //ฟังก์ชั่นเลือกที่จอดรถ จำวนชั่วโมง และเลือกเวลา หักเครดิต แล้วนำมาทำการรวมกันแล้วเก็บข้อมูลลง Firebase
-    }
-          firebase.database().ref('Parksubmit').child(id).push(tmp)
+        firebase.database().ref('Parksubmit').child(id).push(tmp)
           firebase.database().ref('/users/').child(variable).update({
             money: resultcredit,
             status_in: 'On'
@@ -186,34 +528,127 @@
           firebase.database().ref('/money/').child(variable).update({
             money: resultcredit
           })
-          for(var m in this.Month)
-          {
-            for (var mm in this.Month[m]){
-              var day = this.todayDay
-              var days = 'Day'+day
-              for (var mmm in this.Month[m][mm]){
-                var reportm = this.Month[m]['Day'+this.todayDay]
-              }
-            }
-          }
-          var credits = parseFloat(this.selectedhoues, 10)*10
-          if(reportm == null) {
-                  console.log('true ray')
-                   firebase.database().ref('Months').child('/Month'+this.todaynummonth).child('Day'+this.todayDay).update({
-                     'credit': credits ,'day' : this.todayDay
-                     })
-                     firebase.database().ref({'Day': this.todayDay})
-                }else {
-                  var moneysub = this.Month[m]['Day'+this.todayDay].credit + credits
-                  console.log(this.Month[m]['Day'+this.todayDay].credit + credits)
-                  firebase.database().ref('Months').child('/Month'+this.todaynummonth).child('Day'+this.todayDay).update({
-                     'credit': moneysub ,'day' : this.todayDay
-                })
-            }
+          this.reportday()
+          this.reportmonth()
+          this.reportyear ()
+          this.isSubmit = false
+          this.$router.replace('/admin/overview')
+      }
+      if(this.showpark1[apark].name === this.selectedlan && this.showpark1[apark].count >= this.showpark1[apark].Total){
+        firebase.database().ref('Park').child(apark).update({
+            status: 'Off'
+        })
+        alert("Park Full")
+        this.$router.replace('/admin/overview')
+      }
+    }
           }
         }
       }
       this.pullData()
+    },
+    reportday() {
+      let foundday = ''
+      let day = moment().tz('Asia/Bangkok').format().slice(0, 10)
+      var timestart = parseFloat(this.selectedtime,10).toFixed(0) + '.' + this.selectedminit
+        var time = parseFloat(timestart,10) + parseFloat(this.selectedhoues, 10)
+        var timeEnd = parseFloat(time,10).toFixed(2)
+      for (var variable in this.showuser) {
+        if (this.showuser[variable].id === this.id) {
+          var id = this.id
+          var name = this.name
+          var credit = parseFloat(this.selectedhoues, 10)*10
+          var result = (parseFloat(this.selectedtime, 10) + parseFloat(this.selectedhoues, 10)).toFixed(2)
+          var resultcredit = this.showuser[variable].money - credit
+          var hours = parseFloat(this.selectedhoues, 10).toFixed(2)
+        }
+      }
+      const reportday = reportmoneyRef.child('report').child(this.selectedlan).child('day').orderByChild('label').equalTo(day)
+      reportday.on('child_added', snap => {
+        foundday = snap.val()
+      })
+      console.log(reportmoneyRef)
+      if (foundday === '') {
+        console.log("สร้างวันใหม่")
+        let data = {
+          label: day,
+          value: credit
+        }
+        reportmoneyRef.child('report').child(this.selectedlan).child('day').child(day).set(data)
+        reportmoneyRef.child('detail').child(this.selectedlan).child('countdoing').set(1)
+      } else {
+        console.log("เงินรวมคาบบ")
+        let updatavalue = foundday.value + credit
+        reportmoneyRef.child('report').child(this.selectedlan).child('day').child(day).child('value').set(updatavalue)
+      }
+    },
+    reportmonth () {
+      let foundmonth = ''
+      let month  = moment().tz('Asia/Bangkok').format().slice(0, 10)
+      var timestart = parseFloat(this.selectedtime,10).toFixed(0) + '.' + this.selectedminit
+        var time = parseFloat(timestart,10) + parseFloat(this.selectedhoues, 10)
+        var timeEnd = parseFloat(time,10).toFixed(2)
+      for (var variable in this.showuser) {
+        if (this.showuser[variable].id === this.id) {
+          var id = this.id
+          var name = this.name
+          var credit = parseFloat(this.selectedhoues, 10)*10
+          var result = (parseFloat(this.selectedtime, 10) + parseFloat(this.selectedhoues, 10)).toFixed(2)
+          var resultcredit = this.showuser[variable].money - credit
+          var hours = parseFloat(this.selectedhoues, 10).toFixed(2)
+        }
+      }
+      const reportmonth = reportmoneyRef.child('report').child(this.selectedlan).child('month').orderByChild('label').equalTo(month)
+      reportmonth.on('child_added', snap => {
+        foundmonth = snap.val()
+      })
+      console.log(reportmoneyRef)
+      if (foundmonth === '') {
+        console.log("เงินสร้างใหม่เดือน")
+        let data = {
+          label: month,
+          value: credit
+        }
+        reportmoneyRef.child('report').child(this.selectedlan).child('month').child(month).set(data)
+      } else {
+        console.log("เงินรวมเดือนครับ")
+        let updatavalue = foundmonth.value + credit
+        reportmoneyRef.child('report').child(this.selectedlan).child('month').child(month).child('value').set(updatavalue)
+      }
+    },
+    reportyear () {
+      let foundyear = ''
+      let year = moment().tz('Asia/Bangkok').format().slice(0, 4)
+      var timestart = parseFloat(this.selectedtime,10).toFixed(0) + '.' + this.selectedminit
+        var time = parseFloat(timestart,10) + parseFloat(this.selectedhoues, 10)
+        var timeEnd = parseFloat(time,10).toFixed(2)
+      for (var variable in this.showuser) {
+        if (this.showuser[variable].id === this.id) {
+          var id = this.id
+          var name = this.name
+          var credit = parseFloat(this.selectedhoues, 10)*10
+          var result = (parseFloat(this.selectedtime, 10) + parseFloat(this.selectedhoues, 10)).toFixed(2)
+          var resultcredit = this.showuser[variable].money - credit
+          var hours = parseFloat(this.selectedhoues, 10).toFixed(2)
+        }
+      }
+      const reportyear = reportmoneyRef.child('report').child(this.selectedlan).child('year').orderByChild('label').equalTo(year)
+      reportyear.on('child_added', snap => {
+        foundyear = snap.val()
+      })
+      console.log(reportmoneyRef)
+      if (foundyear === '') {
+        console.log("เงินสร้างใหม่เดือน")
+        let data = {
+          label: year,
+          value: credit
+        }
+        reportmoneyRef.child('report').child(this.selectedlan).child('year').child(year).set(data)
+      } else {
+        console.log("เงินรวมเดือนครับ")
+        let updatavalue = foundyear.value + credit
+        reportmoneyRef.child('report').child(this.selectedlan).child('year').child(year).child('value').set(updatavalue)
+      }
     }
   }
 }

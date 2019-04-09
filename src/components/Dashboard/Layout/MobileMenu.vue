@@ -60,17 +60,18 @@
     dbRefuser.on('value', snap => {
       this.showuser = snap.val()
       for (var users in this.showuser) {
-            if (this.showuser[users].id === user.uid) {
+            if (this.showuser[users].id === this.id) {
               this.money1 = this.showuser[users].money
+              console.log(this.showuser[users].id === this.id)
             }
           }
           for (var users in this.showuser) {
-            if (this.showuser[users].id === user.uid) {
+            if (this.showuser[users].id === this.id) {
               this.position1 = this.showuser[users].position
             }
           }
-        })
-      },
+    })
+  },
       created: function () { /* แสดงชื่อ  */
         var user = firebase.auth().currentUser
         if (user) {

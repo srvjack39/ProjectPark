@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-          <a class="navbar-brand" href="#">Park</a>
+          <a class="navbar-brand" href="#">Parking</a>
           <button type="button"
                   class="navbar-toggler navbar-toggler-right"
                   :class="{toggled: $sidebar.showSidebar}"
@@ -19,7 +19,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <img :src='this.pic' alt="" >
+                        <img :src='this.pic' alt="" style="border: 3px solid #fff;border-radius: 50%;box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); ">
                     </a>
                   </li>
               <li class="nav-item">
@@ -178,9 +178,4 @@
 }
 </script>
 <style>
-img {
-  border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
-  border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
-}
 </style>

@@ -49,7 +49,8 @@ export default {
           money: '0',
           position: 'User',
           status_in:'Off',
-          status_out:'Off'
+          status_out:'Off',
+          status_submit: 'On'
         }
         var st = true
         for (var variable in vm.showuser) {
@@ -63,7 +64,7 @@ export default {
           firebase.database().ref('users').push(data)
           // firebase.database().ref('status').push(data)
         }
-        vm.$router.replace('/admin/overview')
+        vm.$router.replace('/admin/Resevation')
       }).catch(function (error) {
         console.log(error)
       })
